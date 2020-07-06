@@ -16,14 +16,14 @@ import com.simptara.crud.exceptions.ItemNotFoundException;
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(value = { ItemNotFoundException.class })
-	public ResponseEntity<Object> notFound(RuntimeException exception) {
-		return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+	@ExceptionHandler(value = { ItemAlreadyExistException.class })
+	public ResponseEntity<Object> alreadyExist(final RuntimeException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
 	}
 
-	@ExceptionHandler(value = { ItemAlreadyExistException.class })
-	public ResponseEntity<Object> alreadyExist(RuntimeException exception) {
-		return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+	@ExceptionHandler(value = { ItemNotFoundException.class })
+	public ResponseEntity<Object> notFound(final RuntimeException exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
 	}
 
 }

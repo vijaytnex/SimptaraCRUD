@@ -32,14 +32,9 @@ public class NotesController extends BaseController {
 	@Autowired
 	private NotesRepository noteServicee;
 
-	@GetMapping("/notes")
-	public Iterable<Notes> showAllNotes() {
-		return noteServicee.findAll();
-	}
-
 	@PostMapping(value = "/notes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@Valid @RequestBody Notes note) {
+	public void create(@Valid @RequestBody final Notes note) {
 		final Optional<Notes> noteInDb = noteServicee.findByName(note.getName());
 
 		if (noteInDb.isPresent()) {
@@ -52,7 +47,7 @@ public class NotesController extends BaseController {
 	}
 
 	@DeleteMapping("/notes/{id}")
-	public void delete(@PathVariable("id") Integer noteId) {
+	public void delete(@PathVariable("id") final Integer noteId) {
 		final Optional<Notes> note = noteServicee.findById((long) noteId);
 
 		if (!note.isPresent()) {
@@ -62,7 +57,7 @@ public class NotesController extends BaseController {
 	}
 
 	@GetMapping("/notes/{id}")
-	public Optional<Notes> findNote(@PathVariable("id") Integer noteId) {
+	public Optional<Notes> findNote(@PathVariable("id") final Integer noteId) {
 		final Optional<Notes> note = noteServicee.findById((long) noteId);
 
 		if (!note.isPresent()) {
@@ -71,8 +66,13 @@ public class NotesController extends BaseController {
 		return noteServicee.findById((long) noteId);
 	}
 
+	@GetMapping("/notes")
+	public Iterable<Notes> showAllNotes() {
+		return noteServicee.findAll();
+	}
+
 	@PutMapping("/notes/{id}")
-	public Optional<Notes> update(@RequestBody Notes note, @PathVariable("id") Integer noteId) {
+	public Optional<Notes> update(@RequestBody final Notes note, @PathVariable("id") final Integer noteId) {
 		final Optional<Notes> noteInDb = noteServicee.findById((long) noteId);
 		if (!noteInDb.isPresent()) {
 			throw new ItemNotFoundException(noteId.toString());

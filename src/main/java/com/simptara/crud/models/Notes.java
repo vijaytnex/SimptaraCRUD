@@ -35,6 +35,22 @@ public class Notes extends BaseModel implements Serializable {
 	}
 
 	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if ((o == null) || (getClass() != o.getClass())) {
+			return false;
+		}
+		final Notes note = (Notes) o;
+		return id.equals(note.id) && name.equals(note.name);
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -43,33 +59,17 @@ public class Notes extends BaseModel implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		final Notes note = (Notes) o;
-		return id.equals(note.id) && name.equals(note.name);
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, creationDate);
+	}
+
+	public void setCreationDate(final LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	@Override
